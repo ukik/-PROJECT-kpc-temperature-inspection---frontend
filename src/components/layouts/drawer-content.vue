@@ -71,7 +71,7 @@
 
         <!-- <q-toolbar v-show="!miniState" class="bg-primary text-white shadow-2">Laporan</q-toolbar> -->
         <q-separator />
-        <q-item
+        <!-- <q-item
           clickable
           v-ripple
           :active="link === 'mingguan'"
@@ -85,9 +85,9 @@
           <q-item-section>
             <q-item-label>Mingguan</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
 
-        <q-item
+        <!-- <q-item
           clickable
           v-ripple
           :active="link === 'bulanan'"
@@ -101,9 +101,9 @@
           <q-item-section>
             <q-item-label>Bulanan</q-item-label>
           </q-item-section>
-        </q-item>
+        </q-item> -->
 
-        <q-item
+        <!-- <q-item
           clickable
           v-ripple
           :active="link === 'kuartal'"
@@ -116,6 +116,22 @@
           </q-item-section>
           <q-item-section>
             <q-item-label>Kuartal</q-item-label>
+          </q-item-section>
+        </q-item> -->
+
+        <q-item
+          clickable
+          v-ripple
+          :active="link === 'laporan'"
+          @click="link = 'laporan'"
+          :to="{ path: 'laporan' }"
+          active-class="my-menu-link"
+        >
+          <q-item-section avatar>
+            <q-icon name="assessment" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Laporan</q-item-label>
           </q-item-section>
         </q-item>
 

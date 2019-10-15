@@ -193,84 +193,18 @@ const state = {
                 }
             ],
             selectedColumns: [{
-                value: "week",
-                label: "Minggu",
-            }, {
-                value: "year",
-                label: "Tahun",
-            }, {
-                value: "month",
-                label: "Bulan",
-            }, {
-                value: "month_name",
-                label: "Nama Bulan",
-            }, {
-                value: "day",
-                label: "Hari",
-            }, {
-                value: "day_name",
-                label: "Nama Hari",
-            }, {
-                value: "date",
-                label: "Tanggal",
-            }, {
-                value: "time",
-                label: "Waktu",
-            }, {
-                value: "no",
-                label: "Nomor",
-            }, {
-                value: "uuid",
-                label: "ID",
-            }, {
-                value: "uuid_tb_employee",
-                label: "ID Karyawan",
-            }, {
-                value: "uuid_tb_inspection",
-                label: "ID Inspeksi",
-            }, {
-                value: "uuid_tb_location",
-                label: "ID Lokasi",
-            }, {
-                value: "uuid_tb_equipment",
-                label: "ID Alat",
-            }, {
-                value: "uuid_tb_equipment",
-                label: "ID Alat",
-            }, {
-                value: "place_inspection",
-                label: "Letak",
-            }, {
-                value: "avg_condition_inspection",
-                label: "Rata-rata Kondisi",
-            }, {
-                value: "avg_grease_shoot_inspection",
-                label: "Rata-rata Grease Shoot",
-            }, {
-                value: "avg_weather_inspection",
-                label: "Rata-rata Cuaca",
-            }, {
-                value: "avg_temperature_inspection",
-                label: "Rata-rata Temperatur",
-            }, {
-                value: "avg_rain_inspection",
-                label: "Rata-rata Hujan",
-            }, {
-                value: "current_upnormal_inspection",
-                label: "Upnormal Sekarang",
-            }, {
-                value: "last_upnormal_inspection",
-                label: "Upnormal Sebelumnya",
-            }, {
-                value: "screenshoot_inspection",
-                label: "Screenshoot",
-            }, {
-                value: "created_at",
-                label: "Dibuat",
-            }, {
-                value: "updated_at",
-                label: "Diperbarui",
-            }],
+                    value: "mingguan",
+                    label: "Laporan Mingguan"
+                },
+                {
+                    value: "bulanan",
+                    label: "Laporan Bulanan"
+                },
+                {
+                    value: "kuartal",
+                    label: "Laporan Kuartal"
+                },
+            ],
             displayColumns: [{
                 value: "week",
                 label: "Minggu",
@@ -392,27 +326,22 @@ const state = {
     },
     data: {
         pagination: {
-            sortBy: "week",
-            descending: true,
-            page: 1,
-            rowsPerPage: 25,
-            rowsNumber: 1,
-            // below is additional object
-            column: "week",
             segment: "/report/inspection",
-            search_column: "week", // search_column:"" is sortBy: "",
-            search_operator: "*",
-            search_query_1: "",
-            search_query_2: "",
-            // addition
+            search_column: "week",
+            search_operator: "equal_to",
+            search_interval: "",
+            equipment: "",
+            location: "",
+            year: new Date().getFullYear(),
             place: "",
-            week: 1,
-            equipment: null,
-            location: null,
+            // addition
+            week: "",
+            month: "",
+            quartal: "",
         },
         payload: {
-            last_page: 0,
-            current_page: 0,
+            // last_page: 0,
+            // current_page: 0,
             data: []
         },
         /*
@@ -468,12 +397,12 @@ const getters = {
     [laporan_mingguan.data.payload.data]: (state) => {
         return state.data.payload.data
     },
-    [laporan_mingguan.data.payload.last_page]: (state) => {
-        return state.data.payload.last_page
-    },
-    [laporan_mingguan.data.payload.current_page]: (state) => {
-        return state.data.payload.current_page
-    },
+    // [laporan_mingguan.data.payload.last_page]: (state) => {
+    //     return state.data.payload.last_page
+    // },
+    // [laporan_mingguan.data.payload.current_page]: (state) => {
+    //     return state.data.payload.current_page
+    // },
     /*
      * method data-table
      * data

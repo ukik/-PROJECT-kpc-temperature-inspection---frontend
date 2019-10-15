@@ -46,16 +46,16 @@
 
     <q-page-container style="padding-bottom:15vh;">
       <router-view />
-      <q-page-sticky position="bottom-right" :offset="[18, 18]">
+      <q-page-sticky position="bottom-right" :offset="[18, 18]" style="z-index:9">
         <q-fab icon="add" direction="up" color="accent">
-          <q-fab-action color="primary" icon="person_add">
+          <q-fab-action color="primary" icon="person_add" :to="{ path:'formulir-karyawan' }">
             <q-tooltip
               content-style="font-size: 14px"
               anchor="center left"
               self="center right"
             >Buat data karyawan</q-tooltip>
           </q-fab-action>
-          <q-fab-action color="primary" icon="mail">
+          <!-- <q-fab-action color="primary" icon="mail">
             <q-tooltip
               content-style="font-size: 14px"
               anchor="center left"
@@ -68,7 +68,7 @@
               anchor="center left"
               self="center right"
             >Buat data lokasi</q-tooltip>
-          </q-fab-action>
+          </q-fab-action> -->
           <q-fab-action color="primary" icon="mail">
             <q-tooltip
               content-style="font-size: 14px"
@@ -143,6 +143,10 @@ export default {
         // intended for switching drawer to "normal" mode only
         e.stopPropagation();
       }
+    },
+    goto(val){
+      alert(val)
+      this.$router.push(val)
     }
   }
 };

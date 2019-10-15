@@ -83,6 +83,7 @@ module.exports = function (ctx) {
         'QInput',
         'QToggle',
         'QChip',
+        'QPopupProxy',
         'QPopupEdit',
         'QCard',
         'QCardSection',
@@ -94,7 +95,10 @@ module.exports = function (ctx) {
         'QSpinnerFacebook',
         'QInnerLoading',
         'QFab',
-        'QFabAction'
+        'QFabAction',
+        'QDate',
+        'QForm',
+        'QVirtualScroll'
       ],
 
       directives: [

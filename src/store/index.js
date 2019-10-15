@@ -13,7 +13,7 @@ import aset_location from './modules/aset/location'
 import inspeksi_catatan from './modules/inspeksi/catatan'
 import inspeksi_temperatur from './modules/inspeksi/temperatur'
 
-import laporan_mingguan from './modules/laporan/mingguan'
+import laporan_custom from './modules/laporan/custom'
 
 Vue.use(Vuex)
 
@@ -35,7 +35,7 @@ export default function ( /* { ssrContext } */ Vue) {
       aset_equipment,
       aset_location,
 
-      laporan_mingguan,
+      laporan_custom,
     },
 
     // enable strict mode (adds overhead!)

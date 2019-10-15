@@ -8,9 +8,7 @@ const aset_location = require('./aset/location')
 const inspeksi_catatan = require('./inspeksi/catatan')
 const inspeksi_temperatur = require('./inspeksi/temperatur')
 
-const laporan_bulanan = require('./laporan/bulanan')
-const laporan_kuartal = require('./laporan/kuartal')
-const laporan_mingguan = require('./laporan/mingguan')
+const laporan_custom = require('./laporan/custom')
 
 module.exports = {
     karyawan_biodata,
@@ -23,9 +21,7 @@ module.exports = {
     inspeksi_catatan,
     inspeksi_temperatur,
 
-    laporan_bulanan,
-    laporan_kuartal,
-    laporan_mingguan,
+    laporan_custom,
 }
 
 // only works without param in getters 

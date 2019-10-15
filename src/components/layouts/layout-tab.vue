@@ -8,7 +8,9 @@
 export default {
   props: ["navs"],
   mounted() {
-    console.log(this.navs[0].to);
+    // console.log(this.get_inspeksi_catatan_select);
+    
+    // console.log(this.navs[0].to);
   }
 };
 </script>

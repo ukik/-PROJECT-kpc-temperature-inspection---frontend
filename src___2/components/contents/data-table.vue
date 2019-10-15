@@ -137,67 +137,6 @@
             </q-input>
           </div>
         </div>
-        <q-space />
-        <div v-if="toolbar" class="row full-width q-mb-sm">
-          <div class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-            <q-select
-              options-dense
-              emit-value
-              map-options
-              v-model="pagination.equipment"
-              @input="onSelectHandler($event, 'equipment')"
-              @filter="filterEquipment"
-              @filter-abort="abortFilterFn"
-              :options="equipmentColumns"
-              option-value="value"
-              label="Pilih Alat"
-              style="min-width: 100%;"
-              class="float-left"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">No results</q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-          </div>
-          <div class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-            <q-select
-              options-dense
-              v-model="pagination.place"
-              emit-value
-              map-options
-              :options="placeColumns"
-              @input="onSelectHandler($event, 'place')"
-              option-value="value"
-              label="Pilih Letak"
-              style="min-width: 100%;"
-              class="float-left"
-            />
-          </div>
-          <div class="col-12 col-xs-2 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-            <q-select
-              options-dense
-              emit-value
-              map-options
-              :value="pagination.location"
-              :options="locationColumns"
-              @input="onSelectHandler($event, 'location')"
-              @filter="filterLocation"
-              @filter-abort="abortFilterFn"
-              option-value="value"
-              label="Pilih Alat"
-              style="min-width: 100%;"
-              class="float-left"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey">No results</q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-          </div>
-        </div>
       </template>
 
       <template v-slot:header-cell="props">
@@ -246,170 +185,13 @@ export default {
     }
   },
   computed: {
-    weekColumns() {
-      let weeks = [];
-      for (let index = 1; index <= 48; index++) {
-        weeks.push({
-          label: index,
-          value: index,
-          disable: false,
-          required: index == 1 ? true : false,
-          category: index
-        });
-      }
-      console.log(weeks);
-
-      return weeks;
-    },
     columns() {
-      return [
-        {
-          name: "avg_condition_inspection",
-          label: "Kondisi (Average)",
-          field: "avg_condition_inspection",
-          align: "left",
-          sortable: false,
-          required: true
-        },
-        {
-          name: "week",
-          label: "Minggu",
-          field: "week",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "year",
-          label: "Tahun",
-          field: "year",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "month",
-          label: "Bulan",
-          field: "month",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "month_name",
-          label: "Nama Bulan",
-          field: "month_name",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "day",
-          label: "Hari",
-          field: "day",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "day_name",
-          label: "Nama Hari",
-          field: "day_name",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "date",
-          label: "Tanggal",
-          field: "date",
-          align: "left",
-          sortable: false
-        },
-        {
-          name: "time",
-          label: "Waktu",
-          field: "time",
-          align: "left",
-          sortable: false
-        }
-      ];
-      // return this["get_" + this._store_module + "_columns"];
+      return this["get_" + this._store_module + "_columns"];
     },
     selectedColumns() {
-      return [
-        {
-          value: "avg_condition_inspection",
-          label: "Kondisi (Average)"
-        },
-        {
-          value: "week",
-          label: "Minggu"
-        },
-        {
-          value: "year",
-          label: "Tahun"
-        },
-        {
-          value: "month",
-          label: "Bulan"
-        },
-        {
-          value: "month_name",
-          label: "Nama Bulan"
-        },
-        {
-          value: "day",
-          label: "Hari"
-        },
-        {
-          value: "day_name",
-          label: "Nama Hari"
-        },
-        {
-          value: "date",
-          label: "Tanggal"
-        },
-        {
-          value: "time",
-          label: "Waktu"
-        }
-      ];
       return this["get_" + this._store_module + "_selectedColumns"];
     },
     displayColumns() {
-      return [
-        {
-          value: "avg_condition_inspection",
-          label: "Kondisi (Average)"
-        },
-        {
-          value: "week",
-          label: "Minggu"
-        },
-        {
-          value: "year",
-          label: "Tahun"
-        },
-        {
-          value: "month",
-          label: "Bulan"
-        },
-        {
-          value: "month_name",
-          label: "Nama Bulan"
-        },
-        {
-          value: "day",
-          label: "Hari"
-        },
-        {
-          value: "day_name",
-          label: "Nama Hari"
-        },
-        {
-          value: "date",
-          label: "Tanggal"
-        },
-        {
-          value: "time",
-          label: "Waktu"
-        }
-      ];
       return this["get_" + this._store_module + "_displayColumns"];
     },
     separator() {
@@ -426,13 +208,6 @@ export default {
     },
     current_page() {
       return this["get_" + this._store_module + "_current_page"];
-    },
-    host() {
-      if (this.$q.platform.is.mobile) {
-        return "http://172.16.210.123/[PROJECT] kpc temperatur inspection/public";
-      } else {
-        return "http://localhost:8000";
-      }
     }
   },
   watch: {
@@ -480,7 +255,6 @@ export default {
       },
       deep: true
     },
-    // update vuex
     pagination: {
       handler: function(after, before) {
         const vm = this;
@@ -505,31 +279,6 @@ export default {
       search_query_2: false,
       pagination: {},
       visibleColumns: [],
-
-      equipmentColumns: [],
-      locationColumns: [],
-
-      placeColumns: [
-        {
-          label: "",
-          value: "0",
-          disable: false,
-          // required: true,
-          category: "1"
-        },
-        {
-          label: "Kiri",
-          value: "1",
-          disable: false,
-          category: "2"
-        },
-        {
-          label: "Kanan",
-          value: "2",
-          disable: false,
-          category: "3"
-        }
-      ],
       operators: [
         {
           label: "Pilih",
@@ -604,15 +353,8 @@ export default {
   mounted() {
     if (this._store_module) {
       this.pagination = this["get_" + this._store_module + "_pagination"];
-
       this.visibleColumns = this[
         "get_" + this._store_module + "_visibleColumns"
-      ];
-      this.equipmentColumns = this[
-        "get_" + this._store_module + "_equipmentColumns"
-      ];
-      this.locationColumns = this[
-        "get_" + this._store_module + "_locationColumns"
       ];
 
       // get initial data from server (1st page)
@@ -623,87 +365,6 @@ export default {
     }
   },
   methods: {
-    filterEquipment(val, update, abort) {
-      var vm = this;
-
-      if (vm.equipmentColumns.length > 0) {
-        // already loaded
-        update();
-        return;
-      }
-
-      new Promise(resolve => {
-        resolve(
-          vm.onAxios({
-            url: `${vm.host}/api/v1/library/equipment?type=select`,
-            key: "equipment"
-          })
-        );
-      }).then(result => {
-        vm.equipmentColumns = result;
-        setTimeout(() => {
-          update();
-        }, 500);
-      });
-    },
-
-    filterLocation(val, update, abort) {
-      var vm = this;
-
-      if (vm.locationColumns.length > 0) {
-        // already loaded
-        update();
-        return;
-      }
-
-      new Promise(resolve => {
-        resolve(
-          vm.onAxios({
-            url: `${vm.host}/api/v1/library/location?type=select`,
-            key: "location"
-          })
-        );
-      }).then(result => {
-        vm.locationColumns = result;
-        setTimeout(() => {
-          update();
-        }, 500);
-      });
-    },
-
-    abortFilterFn() {
-      // console.log('delayed filter aborted')
-    },
-    onAxios(type) {
-      var vm = this;
-
-      let options = [];
-
-      vm.$axios
-        .get(type.url)
-        .then(function(response) {
-          // console.log(response.data.payload);
-
-          for (let index = 0; index < response.data.payload.length; index++) {
-            options.push({
-              label: response.data.payload[index]["name_" + type.key],
-              value: response.data.payload[index].uuid,
-              disable: false,
-              required: index == 0 ? true : false,
-              category: index
-            });
-          }
-
-          // vm[type.key + "Columns"] = options;
-          // Vue.set(vm.$data, "model", response.data);
-        })
-        .catch(function(error) {});
-      vm.onActionBiodata({
-        data: options,
-        type: type.key + "Columns"
-      });
-      return options;
-    },
     onEmitToolbar() {
       // emit dengan keyword "input" bisa di v-model oleh parent
       this.$emit("input", (toolbar = !toolbar));
@@ -750,7 +411,7 @@ export default {
       let q = this.pagination;
 
       q.search_operator =
-        q.search_operator === "*" ? "like" : q.search_operator;
+        q.search_operator === "*" ? "not_in" : q.search_operator;
 
       const route = this.$route.query;
 
@@ -760,7 +421,7 @@ export default {
 
         sortBy: q.sortBy,
 
-        column: route.search_column ? route.search_column : q.search_column,
+        // column: route.search_column ? route.search_column : q.search_column,
 
         search_column: route.search_column
           ? route.search_column
@@ -779,7 +440,15 @@ export default {
 
       console.log(JSON.stringify(local_paginate));
 
-      return `${this.host}/api/v1${q.segment}?column=${q.column}&sortBy=${q.sortBy}&direction=${q.descending}&per_page=${q.rowsPerPage}&page=${q.page}&search_column=${q.search_column}&search_operator=${q.search_operator}&search_query_1=${q.search_query_1}&search_query_2=${q.search_query_2}`;
+      let url = "";
+      if (this.$q.platform.is.mobile) {
+        url =
+          "http://172.16.210.123/[PROJECT] kpc temperatur inspection/public";
+      } else {
+        url = "http://localhost:8000";
+      }
+
+      return `${url}/api/v1${q.segment}?sortBy=${q.sortBy}&direction=${q.descending}&per_page=${q.rowsPerPage}&page=${q.page}&search_column=${q.search_column}&search_operator=${q.search_operator}&search_query_1=${q.search_query_1}&search_query_2=${q.search_query_2}`;
     },
     onRequest(props) {
       const vm = this;

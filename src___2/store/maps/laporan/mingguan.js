@@ -23,8 +23,8 @@ const map_laporan_mingguan = {
             // dynamic
             get_laporan_mingguan_pagination: laporan_mingguan.data.pagination,
             get_laporan_mingguan_data: laporan_mingguan.data.payload.data,
-            get_laporan_mingguan_last_page: laporan_mingguan.data.payload.last_page,
-            get_laporan_mingguan_current_page: laporan_mingguan.data.payload.current_page,
+            // get_laporan_mingguan_last_page: laporan_mingguan.data.payload.last_page,
+            // get_laporan_mingguan_current_page: laporan_mingguan.data.payload.current_page,
             // detail
             get_laporan_mingguan_select: laporan_mingguan.data.detail.select,
         }),

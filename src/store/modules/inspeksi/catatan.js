@@ -245,12 +245,17 @@ const state = {
             rowsPerPage: 25,
             rowsNumber: 1,
             // below is additional object
-            column: "created_at",
+            // column: "created_at",
             segment: "/mutation/inspection-information",
             search_column: "created_at", // search_column:"" is sortBy: "",
             search_operator: "*",
             search_query_1: "",
             search_query_2: "",
+            month: function() {
+                const month = new Date().getMonth()
+                return (month <= 9 ? '0'+month : month).toString()
+            }(),
+            year: new Date().getFullYear(),            
         },
         payload: {
             last_page: 0,

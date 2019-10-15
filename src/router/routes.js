@@ -46,19 +46,33 @@ const routes = [{
       name: 'karyawan-role-edit',
       component: () => import('../pages/karyawan/karyawan-role-edit.vue')
     },
+    // {
+    //   path: 'laporan-mingguan',
+    //   name: 'laporan-mingguan',
+    //   component: () => import('../pages/laporan/laporan-mingguan.vue')
+    // }, 
+    // {
+    //   path: 'laporan-bulanan',
+    //   name: 'laporan-bulanan',
+    //   component: () => import('../pages/laporan/laporan-bulanan.vue')
+    // }, 
+    // {
+    //   path: 'laporan-kuartal',
+    //   name: 'laporan-kuartal',
+    //   component: () => import('../pages/laporan/laporan-kuartal.vue')
+    // },
+
     {
-      path: 'laporan-mingguan',
-      name: 'laporan-mingguan',
-      component: () => import('../pages/laporan/laporan-mingguan.vue')
-    }, {
-      path: 'laporan-bulanan',
-      name: 'laporan-bulanan',
-      component: () => import('../pages/laporan/laporan-bulanan.vue')
-    }, {
-      path: 'laporan-kuartal',
-      name: 'laporan-kuartal',
-      component: () => import('../pages/laporan/laporan-kuartal.vue')
+      path: 'formulir-karyawan',
+      name: 'formulir-karyawan',
+      component: () => import('../pages/formulir/karyawan.vue')
     },
+
+    {
+      path: 'laporan',
+      name: 'laporan',
+      component: () => import('../pages/laporan/laporan.vue')
+    },    
   ]
 }]
 

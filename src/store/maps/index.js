@@ -10,9 +10,7 @@ import aset_location from './aset/location'
 import inspeksi_catatan from './inspeksi/catatan'
 import inspeksi_temperatur from './inspeksi/temperatur'
 
-import laporan_bulanan from './laporan/bulanan'
-import laporan_kuartal from './laporan/kuartal'
-import laporan_mingguan from './laporan/mingguan'
+import laporan_custom from './laporan/custom'
 
 Vue.mixin(karyawan_biodata)
 Vue.mixin(karyawan_role)
@@ -24,6 +22,4 @@ Vue.mixin(aset_location)
 Vue.mixin(inspeksi_catatan)
 Vue.mixin(inspeksi_temperatur)
 
-Vue.mixin(laporan_bulanan)
-Vue.mixin(laporan_kuartal)
-Vue.mixin(laporan_mingguan)
+Vue.mixin(laporan_custom)
