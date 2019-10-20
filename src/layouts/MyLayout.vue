@@ -7,7 +7,7 @@
           <img src="../assets/quasar-logo.svg" />
         </q-avatar>
 
-        <q-toolbar-title>Quasar Framework</q-toolbar-title>
+        <q-toolbar-title>KPC Temperature Inspection</q-toolbar-title>
 
         <q-btn flat round dense icon="whatshot" />
       </q-toolbar>
@@ -53,7 +53,7 @@
               content-style="font-size: 14px"
               anchor="center left"
               self="center right"
-            >Buat data karyawan</q-tooltip>
+            >Buat Data Karyawan</q-tooltip>
           </q-fab-action>
           <!-- <q-fab-action color="primary" icon="mail">
             <q-tooltip
@@ -69,20 +69,20 @@
               self="center right"
             >Buat data lokasi</q-tooltip>
           </q-fab-action> -->
-          <q-fab-action color="primary" icon="mail">
+          <q-fab-action color="primary" icon="playlist_add" :to="{ path:'formulir-inspeksi' }">
             <q-tooltip
               content-style="font-size: 14px"
               anchor="center left"
               self="center right"
-            >Buat data inspeksi</q-tooltip>
+            >Buat Data Inspeksi</q-tooltip>
           </q-fab-action>
-          <q-fab-action color="primary" icon="mail">
+          <!-- <q-fab-action color="primary" icon="mail">
             <q-tooltip
               content-style="font-size: 14px"
               anchor="center left"
               self="center right"
             >Perbarui data inspeksi</q-tooltip>
-          </q-fab-action>
+          </q-fab-action> -->
         </q-fab>
       </q-page-sticky>
     </q-page-container>

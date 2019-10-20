@@ -311,6 +311,9 @@ const state = {
             search_operator: "*",
             search_query_1: "",
             search_query_2: "",
+            month: "",
+            year: "",               
+
         },
         payload: {
             last_page: 0,

@@ -93,12 +93,18 @@ module.exports = function (ctx) {
         'QTooltip',
         'QBar',
         'QSpinnerFacebook',
+        'QSpinnerHourglass',
         'QInnerLoading',
         'QFab',
         'QFabAction',
         'QDate',
         'QForm',
-        'QVirtualScroll'
+        'QField',
+        'QVirtualScroll',
+        'QRadio',
+        'QSplitter',
+        'QUploader',
+        'QUploaderAddTrigger',
       ],
 
       directives: [

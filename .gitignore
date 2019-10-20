@@ -18,3 +18,7 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+src___
+src___1
+src___2

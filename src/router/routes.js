@@ -1,19 +1,28 @@
 const routes = [{
   path: '/',
   component: () => import('../layouts/MyLayout.vue'),
-  children: [{
-      path: '',
+  children: [
+    {
+      path: '/',
+      redirect: 'home'
+    },
+    {
+      path: 'home',
       component: () => import('../pages/Index.vue')
     },
     {
       path: 'table',
-      component: () => import('../pages/data-table.vue')
+      component: () => import('../pages/data-table.vue'),
+
     },
 
     {
       path: 'aset-equipment',
       name: 'aset-equipment',
-      component: () => import('../pages/aset/aset-equipment.vue')
+      component: () => import('../pages/aset/aset-equipment.vue'),
+      meta: { 
+          requiresAuth: true
+      }
     },
     {
       path: 'aset-lokasi',
@@ -67,7 +76,11 @@ const routes = [{
       name: 'formulir-karyawan',
       component: () => import('../pages/formulir/karyawan.vue')
     },
-
+    {
+      path: 'formulir-inspeksi',
+      name: 'formulir-inspeksi',
+      component: () => import('../pages/formulir/inspeksi.vue')
+    },
     {
       path: 'laporan',
       name: 'laporan',

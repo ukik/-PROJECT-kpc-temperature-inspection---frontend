@@ -27,12 +27,12 @@ const Editor = resolve => {
   )
 }
 
-// const DataTable = require('../components/data-table')
-const DataTable = resolve => {
+// const DataMutation = require('../components/data-mutation')
+const DataMutation = resolve => {
   require.ensure(
-    ['../components/contents/data-table'],
+    ['../components/contents/data-mutation'],
     () => {
-      resolve(require('../components/contents/data-table'))
+      resolve(require('../components/contents/data-mutation'))
     }, ''
   )
 }
@@ -42,6 +42,15 @@ const DataReport = resolve => {
     ['../components/contents/data-report'],
     () => {
       resolve(require('../components/contents/data-report'))
+    }, ''
+  )
+}
+
+const DataTable = resolve => {
+  require.ensure(
+    ['../components/contents/data-table'],
+    () => {
+      resolve(require('../components/contents/data-table'))
     }, ''
   )
 }
@@ -82,11 +91,12 @@ export default ({
 
   Vue.component('Editor', Editor)
   Vue.component('LinierProgress', LinierProgress)
-  Vue.component('DataTable', DataTable)
   Vue.component('DrawerContent', DrawerContent)
   Vue.component('LayoutTab', LayoutTab)
   Vue.component('InnerLoading', InnerLoading)
   Vue.component('ChartBar', ChartBar)
-  Vue.component('DataReport', DataReport)
 
+  Vue.component('DataTable', DataTable)
+  Vue.component('DataReport', DataReport)
+  Vue.component('DataMutation', DataMutation)
 }

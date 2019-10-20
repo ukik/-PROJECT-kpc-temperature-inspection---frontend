@@ -107,10 +107,60 @@
             />
           </div>
 
-          <div
+          <!-- <div
             v-datatable-toolbar="search_query_2"
             class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
             <q-input
+              v-model="pagination.search_query_1"
+              @keydown="fetchData"
+              label="Pilih Bulan"
+              stack-label
+              placeholder="......."
+              style="min-width: 100%;"
+              class="float-right"
+            >
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </div> -->
+          
+          <div class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+              <q-select
+                ref="month"
+                options-dense
+                v-model="pagination.month"
+                emit-value
+                map-options
+                :options="monthColumns"
+                @input="onSelectHandler($event, 'month')"
+                option-value="value"
+                label="Pilih Interval (Bulan)"
+                style="min-width: 100%;"
+                class="float-left"
+                :rules="[ myRule ]"
+              />
+          </div>
+
+          <div class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
+              <q-input
+                ref="year"
+                type="number"
+                min="2015"
+                max="2099"
+                step="1"
+                v-model="pagination.year"
+                label="Pilih Tahun"
+                style="min-width: 100%;"
+                stack-label
+                class="float-right"
+                :rules="[ myRule ]"
+              />
+          </div>
+
+          <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <q-input
+              ref="search_query_1"
               v-model="pagination.search_query_1"
               @keydown="fetchData"
               label="Kata kunci"
@@ -123,24 +173,7 @@
                 <q-icon name="search" />
               </template>
             </q-input>
-          </div>
-
-          <div v-if="search_query_2" class="col-12 col-xs-2 col-sm-6 col-md-3 col-lg-3 col-xl-3">
-            <q-input
-              v-model="pagination.search_query_2"
-              @keydown="fetchData"
-              label="Kata kunci kedua"
-              style="min-width: 100%;"
-              stack-label
-              placeholder="......."
-              class="float-right"
-            >
-              <template v-slot:append>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </div>
-
+          </div>          
         </div>
       </template>
 
@@ -186,10 +219,26 @@ export default {
       type: String
     },
     _toolbar: {
-      default: false
+      default: true
     }
   },
   computed: {
+    monthColumns() {
+      let data = [];
+      for (let index = 1; index <= 12; index++) {
+        const val = index <= 9 ? '0'+index : index
+        data.push({
+          label: MonthConverter(val),
+          value: val,
+          disable: false,
+          required: index == 1 ? true : false,
+          category: index
+        });
+      }
+      // console.log(data);
+
+      return data;
+    },    
     columns() {
       return this["get_" + this._store_module + "_columns"];
     },
@@ -232,6 +281,9 @@ export default {
 
         let element = document.getElementsByClassName("q-table__bottom row")[0]
           .children[0];
+
+        console.log('watcher loading', element);
+        
 
         if (!vm.loading) {
           if (vm.data !== undefined) {
@@ -296,13 +348,15 @@ export default {
   },
   mounted() {
     if (this._store_module) {
-
+      
       this.pagination = this["get_" + this._store_module + "_pagination"];
 
       this.visibleColumns = this[
         "get_" + this._store_module + "_visibleColumns"
       ];
 
+      console.log(this.pagination);
+      
       // get initial data from server (1st page)
       this.onRequest({
         pagination: this.pagination,
@@ -332,7 +386,7 @@ export default {
           // as having an error, but there will not be any
           // error message displayed below the input
           // (only in browser console)
-        }, 500);
+        }, 1000);
       });
     },    
     onEmitToolbar() {
@@ -348,12 +402,16 @@ export default {
     onSelectHandler(data, type) {
       this.pagination[type] = data;
 
-      this.fetchData();
+      // this.fetchData();
     },
     fetchData: _.debounce(function() {
       var vm = this;
 
       vm.loading = true;
+
+      if (!vm.validateInput()) {
+        return;
+      }
 
       vm.$axios
         .get(vm.buildURL())
@@ -362,14 +420,68 @@ export default {
 
           vm.loading = false;
 
-          vm.onAction({
-            data: response.data.payload,
-            type: "payload"
-          });
+          if (response.data.payload.data.length > 0) {
+
+            // vm.$q.notify({
+            //   color: "positive",
+            //   message: "Success",
+            //   actions: [
+            //     {
+            //       label: "Tutup",
+            //       color: "white",
+            //       handler: () => {
+            //         /* console.log('wooow') */
+            //       }
+            //     }
+            //   ]
+            // });
+            
+            vm.onAction({
+              data: response.data.payload,
+              type: "payload"
+            });
+
+            return
+
+          } else {
+
+            vm.$q.notify({
+              color: "warning",
+              message: "Maaf! Tidak ada data yang ditemukan",
+              icon: "report_problem",
+              actions: [
+                {
+                  label: "Tutup",
+                  color: "white",
+                  handler: () => {
+                    /* console.log('wooow') */
+                  }
+                }
+              ]
+            });
+
+            return
+          }
+
           // Vue.set(vm.$data, "model", response.data);
         })
         .catch(function(error) {
           vm.loading = false;
+
+          vm.$q.notify({
+            color: "negative",
+            message: "Maaf! Server tidak merespon permintaan anda",
+            icon: "report_problem",
+            actions: [
+              {
+                label: "Tutup",
+                color: "white",
+                handler: () => {
+                  /* console.log('wooow') */
+                }
+              }
+            ]
+          });          
         });
     }, 1000),
     buildURL() {
@@ -406,7 +518,7 @@ export default {
 
       console.log(JSON.stringify(local_paginate));
 
-      return `${this.host}/api/v1${q.segment}?sortBy=${q.sortBy}&direction=${q.descending}&per_page=${q.rowsPerPage}&page=${q.page}&search_column=${q.search_column}&search_operator=${q.search_operator}&search_query_1=${q.search_query_1}&search_query_2=${q.search_query_2}`;
+      return `${this.host}/api/v1${q.segment}?year=${q.year}&month=${q.month}&sortBy=${q.sortBy}&direction=${q.descending}&per_page=${q.rowsPerPage}&page=${q.page}&search_column=${q.search_column}&search_operator=${q.search_operator}&search_query_1=${q.search_query_1}&search_query_2=${q.search_query_2}`;
     },
     onRequest(props) {
       const vm = this;
@@ -441,9 +553,93 @@ export default {
     },
     getRowsNumberCount(filter) {
       return 0;
-    }
+    },
+    validateInput() {
+      const vm = this;
+      const ref = vm.$refs;
+      if (ref.year.hasError) {
+        vm.$q.notify({
+          color: "negative",
+          message: "Perhatian! Kolom tahun wajib diisi",
+          icon: "report_problem",
+          position: "top",
+          actions: [
+            {
+              label: "Tutup",
+              color: "white",
+              handler: () => {
+                /* console.log('wooow') */
+              }
+            }
+          ]
+        });
+        return false;
+      }
+      if (ref.month.hasError) {
+        vm.$q.notify({
+          color: "negative",
+          message: "Perhatian! Kolom bulan wajib diisi",
+          icon: "report_problem",
+          position: "top",
+          actions: [
+            {
+              label: "Tutup",
+              color: "white",
+              handler: () => {
+                /* console.log('wooow') */
+              }
+            }
+          ]
+        });
+        return false;
+      }
+      return true;
+    },        
   }
 };
+
+function MonthConverter(bulan) {
+  console.log(bulan);
+  
+  switch (bulan.toString()) {
+    case '01':
+      return (bulan = "Januari");
+      break;
+    case '02':
+      return (bulan = "Februari");
+      break;
+    case '03':
+      return (bulan = "Maret");
+      break;
+    case '04':
+      return (bulan = "April");
+      break;
+    case '05':
+      return (bulan = "Mei");
+      break;
+    case '06':
+      return (bulan = "Juni");
+      break;
+    case '07':
+      return (bulan = "Juli");
+      break;
+    case '08':
+      return (bulan = "Agustus");
+      break;
+    case '09':
+      return (bulan = "September");
+      break;
+    case '10':
+      return (bulan = "Oktober");
+      break;
+    case '11':
+      return (bulan = "November");
+      break;
+    case '12':
+      return (bulan = "Desember");
+      break;
+  }
+}
 
 const operator = [
         {
@@ -507,12 +703,12 @@ const operator = [
           disable: false,
           category: "9"
         },
-        {
-          label: "BETWEEN",
-          value: "between",
-          disable: false,
-          category: "1"
-        }
+        // {
+        //   label: "BETWEEN",
+        //   value: "between",
+        //   disable: false,
+        //   category: "1"
+        // }
       ]
 </script>
 

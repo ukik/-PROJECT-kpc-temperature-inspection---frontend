@@ -34,15 +34,25 @@
           <div class="col-12 col-xs-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
             <div class="row" style="display: flex;justify-content: flex-end;">
               <div
-                class="col-6 col-md-5 col-lg-5 col-xl-5"
+                class="col-12 col-md-12 col-lg-7 col-xl-7"
                 style="justify-content: center; display: flex;">
+
                 <q-btn
                   class="glossy float-right btn-fixed-width"
                   color="primary"
-                  label="CARI"
+                  label="proses "
                   style=" margin-right:8px;"
                   @click="fetchData"
-                />
+                  :loading="loading"
+                >
+                  <q-icon class="q-pl-sm" name="replay" />
+
+                  <template v-slot:loading>
+                    <q-spinner-hourglass class="on-left" />
+                    Wait...
+                  </template>                  
+                </q-btn>
+
                 <q-btn color="secondary" @click="toolbar = !toolbar; onEmitToolbar" class="glossy">
                   <q-icon name="keyboard_arrow_up" :class="toolbar ? 'rotate down' : 'rotate'" />
                 </q-btn>
@@ -212,7 +222,7 @@
 </template>
 
 <script>
-import _ from "lodash";
+// import _ from "lodash";
 
 import TableSample from "./data-report/temperatur-cuaca";
 import InformationCui from "./data-report/information-cui";
@@ -294,7 +304,6 @@ export default {
     },   
     columns() {
       return [];
-      // return this["get_" + this._store_module + "_columns"];
     },
     selectedColumns() {
       return [
@@ -311,11 +320,9 @@ export default {
           label: "Laporan Kuartal"
         }
       ];
-      // return this["get_" + this._store_module + "_selectedColumns"];
     },
     displayColumns() {
       return [];
-      // return this["get_" + this._store_module + "_displayColumns"];
     },
     separator() {
       return this["get_" + this._store_module + "_separator"];
@@ -348,6 +355,7 @@ export default {
       },
       deep: true
     },
+    // IMPORTANT
     // update vuex
     pagination: {
       handler: function(before, after) {
@@ -639,19 +647,26 @@ export default {
             
             vm.initialSearched = true;
 
-            vm.$q.notify({
-              color: "positive",
-              message: "Success",
-              actions: [
-                {
-                  label: "Tutup",
-                  color: "white",
-                  handler: () => {
-                    /* console.log('wooow') */
-                  }
-                }
-              ]
+            // vm.$q.notify({
+            //   color: "positive",
+            //   message: "Success",
+            //   actions: [
+            //     {
+            //       label: "Tutup",
+            //       color: "white",
+            //       handler: () => {
+            //         /* console.log('wooow') */
+            //       }
+            //     }
+            //   ]
+            // });
+
+            vm.onAction({
+              data: response.data.payload,
+              type: "payload"
             });
+
+            return
 
           } else {
 
@@ -672,11 +687,6 @@ export default {
 
             return
           }
-
-          vm.onAction({
-            data: response.data.payload,
-            type: "payload"
-          });
 
           // Vue.set(vm.$data, "model", response.data);
         })
@@ -722,6 +732,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom pencarian wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",
@@ -739,6 +750,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom interval wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",
@@ -756,6 +768,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom tahun wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",
@@ -773,6 +786,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom alat wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",
@@ -790,6 +804,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom lokasi wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",
@@ -807,6 +822,7 @@ export default {
           color: "negative",
           message: "Perhatian! Kolom letak wajib diisi",
           icon: "report_problem",
+          position: "top",
           actions: [
             {
               label: "Tutup",

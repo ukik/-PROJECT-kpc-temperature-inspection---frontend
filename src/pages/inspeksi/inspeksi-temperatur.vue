@@ -5,7 +5,7 @@
     </q-toolbar>-->
 
     <q-page>
-      <data-table :_store_module="store_module">
+      <data-mutation :_store_module="store_module">
         <!-- TITLE -->
         <q-toolbar slot="title" style="padding:0px">
           <q-icon name="font_download" size="lg" />
@@ -166,7 +166,7 @@
             <q-td key="updated_at" :props="props.props">{{ props.props.row.updated_at }}</q-td>
           </q-tr>
         </template>
-      </data-table>
+      </data-mutation>
     </q-page>
   </fragment>
 </template>

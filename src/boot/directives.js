@@ -1,8 +1,9 @@
-export default ({
+export default async ({
     // app,
     // router,
     // store,
     Vue
+
 }) => {
 
     Vue.directive('row-color', {

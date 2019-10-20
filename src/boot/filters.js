@@ -1,11 +1,11 @@
-export default ({
+export default async ({
     // app,
     // router,
     // store,
     Vue
 }) => {
 
-    Vue.filter('position', function (value, args) {
+    Vue.filter('position', await function (value, args) {
         switch (Number(value)) {
             case 0:
                 return 'Super Admin';
@@ -16,7 +16,7 @@ export default ({
         }
     });
 
-    Vue.filter('gender', function (value, args) {
+    Vue.filter('gender', await function (value, args) {
         switch (Number(value)) {
             case 0:
                 return 'Laki-laki';
@@ -26,7 +26,7 @@ export default ({
         }
     });
 
-    Vue.filter('place', function (value, args) {
+    Vue.filter('place', await function (value, args) {
         switch (value) {
             case '':
                 return '---';
@@ -37,7 +37,7 @@ export default ({
         }
     });
 
-    Vue.filter('marital', function (value, args) {
+    Vue.filter('marital', await function (value, args) {
         switch (Number(value)) {
             case 0:
                 return 'Lajang';
@@ -47,7 +47,7 @@ export default ({
         }
     });
 
-    Vue.filter('verification', function (value, args) {
+    Vue.filter('verification', await function (value, args) {
         switch (Number(value)) {
             case 0:
                 return 'Tidek Terverifikasi';
@@ -57,7 +57,7 @@ export default ({
         }
     });
 
-    Vue.filter('disable', function (value, args) {
+    Vue.filter('disable', await function (value, args) {
         switch (Number(value)) {
             case 0:
                 return 'Tidak';

@@ -1,3 +1,5 @@
+const auth = require('./auth')
+
 const karyawan_biodata = require('./karyawan/biodata')
 const karyawan_role = require('./karyawan/role')
 const karyawan_role_edit = require('./karyawan/role-edit')
@@ -10,7 +12,12 @@ const inspeksi_temperatur = require('./inspeksi/temperatur')
 
 const laporan_custom = require('./laporan/custom')
 
+const formulir_inspeksi = require('./formulir/inspeksi')
+const formulir_karyawan = require('./formulir/karyawan')
+
 module.exports = {
+    auth,
+
     karyawan_biodata,
     karyawan_role,
     karyawan_role_edit,
@@ -22,6 +29,9 @@ module.exports = {
     inspeksi_temperatur,
 
     laporan_custom,
+
+    formulir_inspeksi,
+    formulir_karyawan,
 }
 
 // only works without param in getters 

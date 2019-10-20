@@ -14,3 +14,14 @@ import zoom from 'vue-image-zoom';
 import 'vue-image-zoom/dist/vue-image-zoom.css';
 
 Vue.use(zoom);
+
+import _ from "lodash";
+
+export default ({
+  // app,
+  // router,
+  // store,
+  Vue
+}) => {
+    Vue.prototype._ = _
+}

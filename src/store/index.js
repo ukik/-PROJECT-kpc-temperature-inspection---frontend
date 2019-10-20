@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 // import example from './module-example'
+import auth from './modules/auth'
 
 import karyawan_biodata from './modules/karyawan/biodata'
 import karyawan_role from './modules/karyawan/role'
@@ -15,6 +16,9 @@ import inspeksi_temperatur from './modules/inspeksi/temperatur'
 
 import laporan_custom from './modules/laporan/custom'
 
+import formulir_inspeksi from './modules/formulir/inspeksi'
+import formulir_karyawan from './modules/formulir/karyawan'
+
 Vue.use(Vuex)
 
 /*
@@ -25,6 +29,8 @@ Vue.use(Vuex)
 export default function ( /* { ssrContext } */ Vue) {
   const Store = new Vuex.Store({
     modules: {
+      auth,
+      
       karyawan_biodata,
       karyawan_role,
       karyawan_role_edit,
@@ -36,6 +42,9 @@ export default function ( /* { ssrContext } */ Vue) {
       aset_location,
 
       laporan_custom,
+
+      formulir_inspeksi,
+      formulir_karyawan,
     },
 
     // enable strict mode (adds overhead!)
