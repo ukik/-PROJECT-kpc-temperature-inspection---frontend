@@ -7,6 +7,22 @@ node_modules
 /src-cordova/platforms
 /src-cordova/plugins
 /src-cordova/www
+
+/src-cordova__1
+
+/src___
+/src___1
+/src___2
+/src___3
+/src___4
+/src___5
+/src___6
+/src___7
+/src___8
+/src___9
+
+quasar.conf___.js
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -19,6 +35,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-src___
-src___1
-src___2
+

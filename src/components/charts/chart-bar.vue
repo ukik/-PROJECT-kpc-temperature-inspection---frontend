@@ -6,13 +6,13 @@ export default {
   extends: Bar,
   props: {
     _newLabel: {
-      default: () => ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
+      default: () => [] //["Red", "Blue", "Yellow", "Green", "Purple", "Orange"]
     },
     _newDatasets: {
-      default: () => ({
-        label: "Grafik Cuaca Mingguan",
-        data: [12, 19, 3, 5, 2, 3]
-      })
+      default: () => []
+    },
+    _fieldInspection: {
+      default: ""
     }
   },
   data() {
@@ -21,8 +21,8 @@ export default {
         labels: this._newLabel,
         datasets: [
           {
-            label: this._newDatasets.label,
-            data: this._newDatasets.data,
+            label: this._newLabel, //this._newDatasets.label,
+            data: this._newDatasets, //this._newDatasets.data,
             backgroundColor: [
               "rgba(255, 99, 132, 0.2)",
               "rgba(54, 162, 235, 0.2)",
@@ -48,11 +48,19 @@ export default {
   },
 
   mounted() {
-    // this.chartdata = this._chartdata;
+    const vm = this;
     let { datasets } = this.chartdata;
-    console.log(datasets);
 
     this.options = {
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: true
+            }
+          }
+        ]
+      },
       responsive: true,
       maintainAspectRatio: false,
       legend: {
@@ -66,7 +74,7 @@ export default {
             //labels[0].fillStyle = "red";
             //labels[1].fillStyle = 'blue';
 
-            return labels; // untuk menghilangkan tombol legenda
+            // return labels; // untuk menghilangkan tombol legenda
           }
         }
       },
@@ -76,7 +84,7 @@ export default {
         //   vm.popup(array[0]._index);
         //   // console.log(array[0]._index)
         // }
-        console.log(array);
+        // console.log(array);
       },
       tooltips: {
         bodyFontColor: "#000000",
@@ -92,7 +100,24 @@ export default {
               return "No Data";
             } else {
               let mylabel = data.labels[tooltipItem.index];
-              let mydata = data.datasets[0].data[tooltipItem.index];
+
+              let mydata = "";
+              switch (vm._fieldInspection) {
+                case "condition":
+                  mydata =
+                    " (Mean) " +
+                    getCondition(data.datasets[0].data[tooltipItem.index]);
+                  break;
+                case "weather":
+                  mydata =
+                    " (Mean) " +
+                    getWeather(data.datasets[0].data[tooltipItem.index]);
+                  break;
+                default:
+                  mydata =
+                    " (Mean) " + data.datasets[0].data[tooltipItem.index];
+                  break;
+              }
 
               // console.log(tooltipItem.index)
               return mydata;
@@ -111,20 +136,34 @@ var defaultLegendClickHandler = Chart.defaults.global.legend.onClick;
 var newLegendClickHandler = function(e, legendItem) {
   var index = legendItem.datasetIndex;
 
-  console.log(index, legendItem);
-
   return;
-
-  // if (index > 1) {
-  //   // Do the original logic
-  //   defaultLegendClickHandler(e, legendItem);
-  // } else {
-  //   let ci = this.chart;
-  //   [ci.getDatasetMeta(0), ci.getDatasetMeta(1)].forEach(function(meta) {
-  //     meta.hidden =
-  //       meta.hidden === null ? !ci.data.datasets[index].hidden : null;
-  //   });
-  //   ci.update();
-  // }
 };
+
+function getCondition(value) {
+  switch (Number(value)) {
+    case 1:
+      return "Noise";
+    case 2:
+      return "Dusty";
+    case 3:
+      return "Vibration";
+  }
+}
+
+function getWeather(value) {
+  switch (Number(value)) {
+    case 1:
+      return "Cerah";
+    case 2:
+      return "Mendung";
+    case 3:
+      return "Hujan";
+    case 4:
+      return "Kabut";
+    case 5:
+      return "Angin";
+    case 6:
+      return "Lainnya";
+  }
+}
 </script>

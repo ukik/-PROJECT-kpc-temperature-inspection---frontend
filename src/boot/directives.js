@@ -1,12 +1,10 @@
-export default async ({
+export default async({
     // app,
     // router,
     // store,
     Vue
-
 }) => {
-
-    Vue.directive('row-color', {
+    Vue.directive("row-color", {
         inserted(el, binding, vnode) {
             // console.log(binding.value)
             if (binding.value.val.length <= 1) {
@@ -22,38 +20,38 @@ export default async ({
             } else {
                 el.style.background = binding.value.oldColor;
             }
-        },
-    })
+        }
+    });
 
-    Vue.directive('text-color', {
+    Vue.directive("text-color", {
         inserted(el, binding, vnode) {
-            console.log(binding.value)
+            // console.log(binding.value);
             for (let index = 0; index < binding.value.colors.length; index++) {
                 if (binding.value.val == index) {
                     // console.log(binding.value.colors[binding.value.val])
                     el.style.color = binding.value.colors[binding.value.val];
-                    break
+                    break;
                 }
             }
         },
         update(el, binding, vnode) {
-            console.log(binding.value)
+            // console.log(binding.value);
             for (let index = 0; index < binding.value.colors.length; index++) {
                 if (binding.value.val == index) {
                     el.style.color = binding.value.colors[binding.value.val];
-                    break
+                    break;
                 }
             }
-        },
-    })
+        }
+    });
 
     // not used yet
-    Vue.directive('text-color-screenshoot', {
+    Vue.directive("text-color-screenshoot", {
         inserted(el, binding, vnode) {
             // console.log(binding.value)
             if (!binding.value.val) {
                 el.style.color = binding.value.nothing;
-                return
+                return;
             }
 
             if (binding.value.val.length <= 1) {
@@ -66,7 +64,7 @@ export default async ({
             // console.log(binding.value)
             if (!binding.value.val) {
                 el.style.color = binding.value.nothing;
-                return
+                return;
             }
 
             if (binding.value.val.length <= 1) {
@@ -74,10 +72,10 @@ export default async ({
             } else {
                 el.style.color = binding.value.exist;
             }
-        },
-    })
+        }
+    });
 
-    Vue.directive('datatable-toolbar', {
+    Vue.directive("datatable-toolbar", {
         inserted(el, binding, vnode) {
             // console.log(binding.value)
             if (binding.value) {
@@ -93,42 +91,63 @@ export default async ({
             } else {
                 el.className = "col-12 col-xs-2 col-sm-6 col-md-6 col-lg-6 col-xl-6";
             }
-        },
-    })
+        }
+    });
 
-    // not used
-    Vue.directive('date-watch', {
-        inserted(el, binding, vnode) {
-            console.log(binding.value)
-        },
+    Vue.directive("column-visible", {
         update(el, binding, vnode) {
-            console.log(binding.value)
-        },
-    })
-
-    Vue.directive('column-visible', {
-        update(el, binding, vnode) {
-            const width = window.screen.width * window.devicePixelRatio
-            const height = window.screen.height * window.devicePixelRatio
+            const width = window.screen.width * window.devicePixelRatio;
+            const height = window.screen.height * window.devicePixelRatio;
 
             // console.log("Your screen resolution is: " + window.screen.width * window.devicePixelRatio + "x" + window.screen.height * window.devicePixelRatio);
 
             if (width <= 850) {
-                el.style.height = 'height: 250 px;'
-                el.style.width = 'width: 265 px;'
+                el.style.height = "height: 250 px;";
+                el.style.width = "width: 265 px;";
             } else {
-                el.style.height = 'auto;'
-                el.style.width = 'auto'
+                el.style.height = "auto;";
+                el.style.width = "auto";
             }
-        },
-    })
+        }
+    });
 
-    Vue.directive('pointer', {
+    Vue.directive("valid", {
         inserted(el, binding, vnode) {
-            el.style.cursor = "pointer"
+            el.style.color = binding.value == "false" ? "red" : "green";
         },
-    })
+        update(el, binding, vnode) {
+            el.style.color = binding.value == "false" ? "red" : "green";
+        }
+    });
 
+    Vue.directive("pointer", {
+        inserted(el, binding, vnode) {
+            el.style.cursor = "pointer";
+        }
+    });
 
+    Vue.directive("arrow", {
+        inserted(el, binding, vnode) {
+            el.style.cursor = "pointer !important";
+        }
+    });
 
-}
+    Vue.directive("capitalize", {
+        inserted(el, binding, vnode) {
+            el.style.textTransform = "capitalize";
+        }
+    });
+
+    Vue.directive("hide", {
+        inserted(el, binding, vnode) {
+            // console.log(binding.value);
+
+            el.style.display = binding.value == undefined ? 'none' : 'default';
+        },
+        update(el, binding, vnode) {
+            // console.log(binding.value);
+
+            el.style.display = binding.value == undefined ? 'none' : 'default';
+        }
+    });
+};

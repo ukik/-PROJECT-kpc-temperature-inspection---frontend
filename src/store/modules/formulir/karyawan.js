@@ -2,11 +2,18 @@ const {
     formulir_karyawan
 } = require("../../namespaces/index");
 
+const {
+    data: {
+        form,
+        password_confirmation,
+        update,
+    },
+    action,
+} = formulir_karyawan
+
 const state = {
     data: {
         form: {
-            // no: "",
-            // uuid: "",
             name_employee: "",
             position_employee: "",
             nik_employee: "",
@@ -18,55 +25,80 @@ const state = {
             marital_employee: "",
             address_employee: "",
             password_employee: "",
-            // plain_password_employee: "",
             photo_employee: "",
-            // verification_employee: "",
-            // disable_employee: "",
-            // created_at: "",
-            // updated_at: "",
-
-            password_confirmation_employee: { // client only, not send to server
-                confirmation: "",
-                visibility: false,
-            },        
-
         },
-        payload: {
-            data: []
+        password_confirmation: { // client only, not send to server
+            confirmation: "",
+            visibility: false,
         },
+        update: false, // true = update yang belum selesai   
     }
 };
 
 const getters = {
-    [formulir_karyawan.data.form]: (state) => {
+    [form]: (state) => {
         return state.data.form
     },
-    [formulir_karyawan.data.payload.data]: (state) => {
-        return state.data.payload.data
+    [update]: (state) => {
+        return state.data.update
+    },
+    [password_confirmation]: (state) => {
+        return state.data.password_confirmation
     },
 };
 
 const mutations = {
-    [formulir_karyawan.data.form]: (state, data) => {
+    [form]: (state, data) => {
         state.data.form = data
     },
-    [formulir_karyawan.data.payload.data]: (state, data) => {
-        state.data.payload = data
+    [password_confirmation]: (state, data) => {
+        state.data.password_confirmation = data
     },
 };
 
 const actions = {
-    [formulir_karyawan.action]: ({
+    [action]: ({
+        state,
         commit
     }, payload) => {
 
         switch (payload.type) {
             case 'form':
-                commit(formulir_karyawan.data.form, payload.data);
+                commit(form, payload.data);
                 break;
-            case 'payload':
-                commit(formulir_karyawan.data.payload.data, payload.data);
+            case 'update_form':
+                state.data.update = true
+                commit(password_confirmation, {
+                    confirmation: "",
+                    visibility: false,
+                });
+                commit(form, payload.data);
                 break;
+            case 'reset_form':
+                state.data.update = false
+                commit(password_confirmation, {
+                    confirmation: "",
+                    visibility: false,
+                });
+                commit(form, {
+                    name_employee: "",
+                    position_employee: "",
+                    nik_employee: "",
+                    telpon_employee: "",
+                    email_employee: "",
+                    birth_place_employee: "",
+                    birth_date_employee: "",
+                    gender_employee: "",
+                    marital_employee: "",
+                    address_employee: "",
+                    password_employee: "",
+                    photo_employee: "",
+                });
+                break;
+            case 'password_confirmation':
+                commit(password_confirmation, payload.data);
+                break;
+
         }
     },
 

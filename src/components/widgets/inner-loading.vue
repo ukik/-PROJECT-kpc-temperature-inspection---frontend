@@ -15,13 +15,6 @@ export default {
     return {
       visible: this._visible
     };
-  },
-  watch: {
-    visible() {
-      setTimeout(() => {
-        this.visible = false;
-      }, 2500);
-    }
   }
 };
 </script>

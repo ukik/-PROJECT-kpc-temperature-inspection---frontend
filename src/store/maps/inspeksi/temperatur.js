@@ -7,29 +7,53 @@ const {
     inspeksi_temperatur
 } = require("../../namespaces");
 
+const {
+    config: {
+        static: {
+            columns,
+            selectedColumns,
+            displayColumns,
+        },
+        dynamic: {
+            separator,
+            visibleColumns,
+            selected,
+            loading,
+        }
+    },
+    data: {
+        pagination,
+        payload: {
+            data,
+            replace,
+            remove,
+            last_page,
+            current_page,
+        },
+    },
+    action
+} = inspeksi_temperatur
+
 const map_inspeksi_temperatur = {
     computed: {
         ...mapGetters({
-            // static
-            get_inspeksi_temperatur_columns: inspeksi_temperatur.config.static.columns,
-            get_inspeksi_temperatur_selectedColumns: inspeksi_temperatur.config.static.selectedColumns,
-            get_inspeksi_temperatur_displayColumns: inspeksi_temperatur.config.static.displayColumns,
-            get_inspeksi_temperatur_separator: inspeksi_temperatur.config.dynamic.separator,
-            get_inspeksi_temperatur_visibleColumns: inspeksi_temperatur.config.dynamic.visibleColumns,
-            get_inspeksi_temperatur_selected: inspeksi_temperatur.config.dynamic.selected,
-            get_inspeksi_temperatur_loading: inspeksi_temperatur.config.dynamic.loading,
-            // dynamic
-            get_inspeksi_temperatur_pagination: inspeksi_temperatur.data.pagination,
-            get_inspeksi_temperatur_data: inspeksi_temperatur.data.payload.data,
-            get_inspeksi_temperatur_last_page: inspeksi_temperatur.data.payload.last_page,
-            get_inspeksi_temperatur_current_page: inspeksi_temperatur.data.payload.current_page,
-            // detail
-            get_inspeksi_temperatur_select: inspeksi_temperatur.data.detail.select,
+            get_inspeksi_temperatur_columns: columns,
+            get_inspeksi_temperatur_selectedColumns: selectedColumns,
+            get_inspeksi_temperatur_displayColumns: displayColumns,
+            get_inspeksi_temperatur_separator: separator,
+            get_inspeksi_temperatur_visibleColumns: visibleColumns,
+            get_inspeksi_temperatur_selected: selected,
+            get_inspeksi_temperatur_loading: loading,
+
+            get_inspeksi_temperatur_pagination: pagination,
+            get_inspeksi_temperatur_data: data,
+            get_inspeksi_temperatur_last_page: last_page,
+            get_inspeksi_temperatur_current_page: current_page,
         }),
     },
     methods: {
         ...mapActions({
-            set_inspeksi_temperatur: inspeksi_temperatur.action,
+            set_inspeksi_temperatur: action,
         }),
     },
 }

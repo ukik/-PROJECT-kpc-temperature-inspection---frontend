@@ -1,0 +1,8 @@
+{
+    "appId": "com.kpc.temperature",
+    "appName": "KPC Conveyer Inspector",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "cordova": {}
+}

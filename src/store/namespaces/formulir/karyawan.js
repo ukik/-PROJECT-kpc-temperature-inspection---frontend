@@ -1,9 +1,8 @@
 const formulir_karyawan = {
     data: {
         form: 'formulir_karyawan/data/form',
-        payload: {
-            data: 'formulir_karyawan/data/payload/data',
-        },
+        password_confirmation: 'formulir_karyawan/data/password_confirmation',
+        update: 'formulir_karyawan/data/update',
     },
     action: 'formulir_karyawan/action',
 }

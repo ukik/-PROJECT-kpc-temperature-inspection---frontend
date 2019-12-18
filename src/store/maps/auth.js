@@ -7,15 +7,24 @@ const {
     auth
 } = require("../namespaces");
 
+const {
+    data: {
+        credentials,
+        user,
+    },
+    action,
+} = auth
+
 const map_auth = {
     computed: {
         ...mapGetters({
-            get_is_logged_in: auth.is_logged_in,
+            get_credentials: credentials,
+            get_user: user,
         }),
     },
     methods: {
         ...mapActions({
-            set_auth: auth.action,
+            set_auth: action,
         }),
     },
 }

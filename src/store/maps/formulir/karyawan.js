@@ -7,16 +7,26 @@ const {
     formulir_karyawan
 } = require("../../namespaces");
 
+const {
+    data: {
+        form,
+        password_confirmation,
+        update,
+    },
+    action,
+} = formulir_karyawan
+
 const map_formulir_karyawan = {
     computed: {
         ...mapGetters({
-            get_formulir_karyawan_form: formulir_karyawan.data.form,
-            get_formulir_karyawan_data: formulir_karyawan.data.payload.data,
+            get_formulir_karyawan_form: form,
+            get_formulir_karyawan_password_confirmation: password_confirmation,
+            get_formulir_karyawan_update: update,
         }),
     },
     methods: {
         ...mapActions({
-            set_formulir_karyawan: formulir_karyawan.action,
+            set_formulir_karyawan: action,
         }),
     },
 }

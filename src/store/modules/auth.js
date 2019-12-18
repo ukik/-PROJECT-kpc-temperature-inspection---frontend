@@ -1,31 +1,85 @@
+import sharedMutations from 'vuex-shared-mutations';
+
 const {
     auth
 } = require("../namespaces/index");
 
+const {
+    data: {
+        credentials,
+        credentials_update,
+        logout,
+        user,
+    },
+    action,
+} = auth
+
 const state = {
-    is_logged_in: false
+    data: {
+        loading: false,
+        credentials: {
+            logged: false,
+            token: null,
+            role: null,
+        },
+        user: null,
+    }
 };
 
 const getters = {
-    [auth.is_logged_in]: (state) => {
-        return state.is_logged_in
+    [credentials]: (state) => {
+        return state.data.credentials
+    },
+    [user]: state => {
+        return state.data.user
     },
 };
 
 const mutations = {
-    [auth.is_logged_in]: (state, data) => {
-        state.is_logged_in = data
+    [credentials]: (state, data) => {
+        state.data.credentials = data
+
+        localStorage.setItem('token', data.token)
+    },
+    [credentials_update]: (state, data) => {
+        state.data.credentials.logged = data.logged
+        state.data.credentials.role = data.role
+    },
+    [logout]: (state) => {
+        state.data.credentials = {
+            logged: false,
+            token: null,
+            role: null,
+        }
+    },
+    [user]: (state, data) => {
+        state.data.user = data;
     },
 };
 
+const plugin = {
+    plugins: [sharedMutations({
+        predicate: [credentials, credentials_update, logout, user]
+    })],
+}
+
 const actions = {
-    [auth.action]: ({
+    [action]: ({
         commit
     }, payload) => {
 
         switch (payload.type) {
-            case 'is_logged_in':
-                commit(auth.is_logged_in, payload.data);
+            case 'user':
+                commit(user, payload.data);
+                break;
+            case 'credentials':
+                commit(credentials, payload.data);
+                break;
+            case 'credentials_update':
+                commit(credentials_update, payload.data);
+                break;
+            case 'logout':
+                commit(logout);
                 break;
         }
     },
@@ -34,6 +88,7 @@ const actions = {
 
 // export this module.
 export default {
+    plugin,
     state,
     mutations,
     getters,

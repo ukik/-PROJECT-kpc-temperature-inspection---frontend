@@ -7,20 +7,38 @@ const {
     formulir_inspeksi
 } = require("../../namespaces");
 
-const map_formulir_inspeksi = {   
+const {
+    config: {
+        dynamic: {
+            equipmentColumns,
+            locationColumns,
+            scheduleColumns,
+            employeeColumns,
+        }
+    },
+    data: {
+        form,
+        update,
+    },
+    action,
+} = formulir_inspeksi
+
+const map_formulir_inspeksi = {
     computed: {
         ...mapGetters({
-            get_formulir_inspeksi_equipmentColumns: formulir_inspeksi.config.dynamic.equipmentColumns,
-            get_formulir_inspeksi_locationColumns: formulir_inspeksi.config.dynamic.locationColumns,
-            get_formulir_inspeksi_employeeColumns: formulir_inspeksi.config.dynamic.employeeColumns,
+            get_formulir_inspeksi_equipmentColumns: equipmentColumns,
+            get_formulir_inspeksi_locationColumns: locationColumns,
+            get_formulir_inspeksi_scheduleColumns: scheduleColumns,
+            get_formulir_inspeksi_employeeColumns: employeeColumns,
 
-            get_formulir_inspeksi_form: formulir_inspeksi.data.form,
-            get_formulir_inspeksi_data: formulir_inspeksi.data.payload.data,
+            get_formulir_inspeksi_form: form,
+            get_formulir_inspeksi_update: update,
+
         }),
     },
     methods: {
         ...mapActions({
-            set_formulir_inspeksi: formulir_inspeksi.action,
+            set_formulir_inspeksi: action,
         }),
     },
 }

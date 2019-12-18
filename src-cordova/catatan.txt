@@ -1,0 +1,36 @@
+gunakan https://www.npmjs.com/package/cordova-res
+
+untuk membuat splashscreen && app icon
+
+
+bash
+keytool -genkey -v -keystore my-release-key.keystore -alias alias_name -keyalg RSA -keysize 2048 -validity 10000
+
+$ keytool -genkey -v -keystore kpc.keystore -alias kpc -keyalg RSA -keysize 2048 -validity 10000
+Enter keystore password:  123456
+Re-enter new password: 123456
+What is your first and last name?
+  [Unknown]:  muhamad duki
+What is the name of your organizational unit?
+  [Unknown]:  labsnip
+What is the name of your organization?
+  [Unknown]:  yuvoria
+What is the name of your City or Locality?
+  [Unknown]:  samarinda
+What is the name of your State or Province?
+  [Unknown]:  kalimantan timur
+What is the two-letter country code for this unit?
+  [Unknown]:  KL
+Is CN=muhamad duki, OU=labsnip, O=yuvoria, L=samarinda, ST=kalimantan timur, C=KL correct?
+  [no]:  yes
+
+Generating 2.048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10.000 days
+        for: CN=muhamad duki, OU=labsnip, O=yuvoria, L=samarinda, ST=kalimantan timur, C=KL
+Enter key password for <kpc>
+        (RETURN if same as keystore password):  123456
+Re-enter new password: 123456
+[Storing kpc.keystore]
+
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore kpc.keystore -destkeystore kpc.keystore -deststoretype pkcs12".
+

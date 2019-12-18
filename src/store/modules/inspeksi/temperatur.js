@@ -2,352 +2,375 @@ const {
     inspeksi_temperatur
 } = require("../../namespaces/index");
 
+const {
+    config: {
+        static: {
+            columns,
+            selectedColumns,
+            displayColumns,
+        },
+        dynamic: {
+            separator,
+            visibleColumns,
+            selected,
+            loading,
+        }
+    },
+    data: {
+        pagination,
+        payload: {
+            data,
+            replace,
+            remove,
+            last_page,
+            current_page,
+        },
+    },
+    action
+} = inspeksi_temperatur
+
+const tableColumns = {
+    uuid: {
+        name: "uuid",
+        label: "ID Inspeksi",
+        field: "uuid",
+        value: "uuid",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    uuid_tb_employee: {
+        name: "uuid_tb_employee",
+        label: "ID Karyawan",
+        field: "uuid_tb_employee",
+        value: "uuid_tb_employee",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    uuid_tb_location: {
+        name: "uuid_tb_location",
+        label: "ID Lokasi",
+        field: "uuid_tb_location",
+        value: "uuid_tb_location",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    uuid_tb_schedule: {
+        name: "uuid_tb_schedule",
+        label: "ID Jadwal",
+        field: "uuid_tb_schedule",
+        value: "uuid_tb_schedule",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    uuid_tb_equipment: {
+        name: "uuid_tb_equipment",
+        label: "ID Alat",
+        field: "uuid_tb_equipment",
+        value: "uuid_tb_equipment",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    place_inspection: {
+        name: "place_inspection",
+        label: "Letak",
+        field: "place_inspection",
+        value: "place_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    condition_inspection: {
+        name: "condition_inspection",
+        label: "Kondisi",
+        field: "condition_inspection",
+        value: "condition_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    grease_shoot_inspection: {
+        name: "grease_shoot_inspection",
+        label: "Grease Shoot",
+        field: "grease_shoot_inspection",
+        value: "grease_shoot_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    weather_inspection: {
+        name: "weather_inspection",
+        label: "Cuaca",
+        field: "weather_inspection",
+        value: "weather_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    temperature_inspection: {
+        name: "temperature_inspection",
+        label: "Temperatur",
+        field: "temperature_inspection",
+        value: "temperature_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    rain_inspection: {
+        name: "rain_inspection",
+        label: "Curah Hujan",
+        field: "rain_inspection",
+        value: "rain_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    current_upnormal_inspection: {
+        name: "current_upnormal_inspection",
+        label: "Upnormal Sekarang",
+        field: "current_upnormal_inspection",
+        value: "current_upnormal_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    current_upnormal_description_inspection: {
+        name: "current_upnormal_description_inspection",
+        label: "Deskripsi Upnormal Sekarang",
+        field: "current_upnormal_description_inspection",
+        value: "current_upnormal_description_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    last_upnormal_inspection: {
+        name: "last_upnormal_inspection",
+        label: "Upnormal Sebelumnya",
+        field: "last_upnormal_inspection",
+        value: "last_upnormal_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    last_upnormal_description_inspection: {
+        name: "last_upnormal_description_inspection",
+        label: "Deskripsi Upnormal Sebelumnya",
+        field: "last_upnormal_description_inspection",
+        value: "last_upnormal_description_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    common_description_inspection: {
+        name: "common_description_inspection",
+        label: "Deskripsi Tambahan",
+        field: "common_description_inspection",
+        value: "common_description_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    screenshoot_inspection: {
+        name: "screenshoot_inspection",
+        label: "Screenshoot",
+        field: "screenshoot_inspection",
+        value: "screenshoot_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    valid_inspection: {
+        name: "valid_inspection",
+        label: "Valid",
+        field: "valid_inspection",
+        value: "valid_inspection",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    created_at: {
+        name: "created_at",
+        label: "Dibuat",
+        field: "created_at",
+        value: "created_at",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    updated_at: {
+        name: "updated_at",
+        label: "Divalidasi",
+        field: "updated_at",
+        value: "updated_at",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    name_employee: {
+        name: "name_employee",
+        label: "Karyawan",
+        field: "name_employee",
+        value: "name_employee",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    label_equipment: {
+        name: "label_equipment",
+        label: "Label Alat",
+        field: "label_equipment",
+        value: "label_equipment",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    name_equipment: {
+        name: "name_equipment",
+        label: "Nama Alat",
+        field: "name_equipment",
+        value: "name_equipment",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    label_location: {
+        name: "label_location",
+        label: "Label Lokasi",
+        field: "label_location",
+        value: "label_location",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    name_location: {
+        name: "name_location",
+        label: "Lokasi",
+        field: "name_location",
+        value: "name_location",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+
+    label_schedule: {
+        name: "label_schedule",
+        label: "Label Jadwal",
+        field: "label_schedule",
+        value: "label_schedule",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    starttime_schedule: {
+        name: "starttime_schedule",
+        label: "Waktu Masuk",
+        field: "starttime_schedule",
+        value: "starttime_schedule",
+        align: "left",
+        sortable: true,
+        required: false,
+    },
+    endtime_schedule: {
+        name: "endtime_schedule",
+        label: "Waktu Keluar",
+        field: "endtime_schedule",
+        value: "endtime_schedule",
+        align: "left",
+        sortable: true,
+        required: false,
+    }
+}
+
 const state = {
     config: {
         static: { // once
-            /*
-             * reserve data-table
-             */
-            columns: [{
-                    name: "belong_employee.name_employee",
-                    label: "Karyawan",
-                    field: "belong_employee.name_employee",
-                    align: "center",
-                    sortable: true,
-                    required: true,
-                },
+            columns: [
+                tableColumns.name_employee,
+                tableColumns.uuid,
+                tableColumns.uuid_tb_employee,
+                tableColumns.uuid_tb_location,
+                tableColumns.uuid_tb_equipment,
+                tableColumns.uuid_tb_schedule,
 
+                tableColumns.created_at,
+                tableColumns.updated_at,
 
-                // {
-                //     name: "equipment_inspection",
-                //     label: "Kode Alat",
-                //     field: "equipment_inspection",
-                //     align: "center",
-                //     sortable: true,
-                //     required: true,
-                // },
-                {
-                    name: "belong_library_equipment.name_equipment",
-                    label: "Alat",
-                    field: "belong_library_equipment.name_equipment",
-                    align: "center",
-                    sortable: true,
-                },
-
-                // {
-                //     name: "uuid",
-                //     label: "ID",
-                //     field: "uuid",
-                //     sortable: true,
-                //     align: "left"
-                // },
-                // {
-                //     name: "uuid_tb_employee",
-                //     label: "ID Karywan",
-                //     field: "uuid_tb_employee",
-                //     align: "left",
-                //     sortable: true,
-                // },
-                // {
-                //     name: "uuid_tb_inspection",
-                //     label: "ID Inspeksi",
-                //     field: "uuid_tb_inspection",
-                //     align: "left",
-                //     sortable: true,
-                // },
-                // {
-                //     name: "equipment_inspection",
-                //     label: "Alat",
-                //     field: "equipment_inspection",
-                //     align: "left",
-                //     sortable: true,
-                // },
-
-
-                // {
-                //     name: "location_inspection",
-                //     label: "Kode Lokasi",
-                //     field: "location_inspection",
-                //     align: "left",
-                //     sortable: true,
-                // },
-                {
-                    name: "belong_library_location.name_location",
-                    label: "Lokasi",
-                    field: "belong_library_location.name_location",
-                    align: "left",
-                    sortable: true,
-                },
-
-                {
-                    name: "place_inspection",
-                    label: "Letak",
-                    field: "place_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-
-                {
-                    name: "condition_inspection",
-                    label: "Kondisi",
-                    field: "condition_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "grease_shoot_inspection",
-                    label: "Grease Shoot",
-                    field: "grease_shoot_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "weather_inspection",
-                    label: "Cuaca",
-                    field: "weather_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "temperature_inspection",
-                    label: "Temperatur",
-                    field: "temperature_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "rain_inspection",
-                    label: "Hujan",
-                    field: "rain_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "current_upnormal_inspection",
-                    label: "Upnormal Sekarang",
-                    field: "current_upnormal_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "last_upnormal_inspection",
-                    label: "Upnormal Sebelumnya",
-                    field: "last_upnormal_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "screenshoot_inspection",
-                    label: "Screenshoot",
-                    field: "screenshoot_inspection",
-                    align: "left",
-                    sortable: true,
-                },
-                {
-                    name: "created_at",
-                    label: "Dibuat",
-                    field: "created_at",
-                    sortable: true,
-                    align: "left"
-                },
-                {
-                    name: "updated_at",
-                    label: "Diperbarui",
-                    field: "updated_at",
-                    sortable: true,
-                    align: "left"
-                }
+                tableColumns.name_equipment,
+                tableColumns.name_location,
+                tableColumns.place_inspection,
+                tableColumns.condition_inspection,
+                tableColumns.grease_shoot_inspection,
+                tableColumns.weather_inspection,
+                tableColumns.temperature_inspection,
+                tableColumns.rain_inspection,
+                tableColumns.current_upnormal_inspection,
+                tableColumns.last_upnormal_inspection,
+                // tableColumns.screenshoot_inspection,
+                tableColumns.label_schedule,
+                tableColumns.starttime_schedule,
+                tableColumns.endtime_schedule,
+                tableColumns.valid_inspection,
             ],
             // filter option
             selectedColumns: [
-                // {
-                //     value: "uuid",
-                //     label: "ID Inspeksi",
-                // },
+                tableColumns.uuid,
+                // tableColumns.uuid_tb_employee,
+                // tableColumns.uuid_tb_location,
+                // tableColumns.uuid_tb_equipment,
+                // tableColumns.uuid_tb_schedule,
+                tableColumns.name_employee,
 
+                tableColumns.created_at,
+                tableColumns.updated_at,
 
-                {
-                    value: "uuid_tb_employee",
-                    label: "ID Karywan",
-                },
-                {
-                    value: "uuid_tb_inspection",
-                    label: "ID Inspeksi",
-                },
-                {
-                    value: "belong_employee.name_employee",
-                    label: "Karyawan",
-                },
-
-                {
-                    value: "belong_library_equipment.name_equipment",
-                    label: "Alat",
-                },
-                // {
-                //     value: "equipment_inspection",
-                //     label: "Kode Alat",
-                // },
-
-                {
-                    value: "belong_library_location.name_location",
-                    label: "Lokasi",
-                },
-                // {
-                //     value: "location_inspection",
-                //     label: "Kode Lokasi",
-                // },
-                {
-                    value: "place_inspection",
-                    label: "Letak",
-                },
-                {
-                    value: "condition_inspection",
-                    label: "Kondisi",
-                },
-                {
-                    value: "grease_shoot_inspection",
-                    label: "Grease Shoot",
-                },
-                {
-                    value: "weather_inspection",
-                    label: "Cuaca",
-                },
-                {
-                    value: "temperature_inspection",
-                    label: "Temperatur",
-                },
-                {
-                    value: "rain_inspection",
-                    label: "Hujan",
-                },
-                {
-                    value: "current_upnormal_inspection",
-                    label: "Upnormal Sekarang",
-                },
-                {
-                    value: "last_upnormal_inspection",
-                    label: "Upnormal Sebelumnya",
-                },
-                {
-                    value: "screenshoot_inspection",
-                    label: "Screenshoot",
-                },
-                {
-                    value: "created_at",
-                    label: "Dibuat",
-                },
-                {
-                    value: "updated_at",
-                    label: "Diperbarui",
-                }
+                tableColumns.name_equipment,
+                tableColumns.name_location,
+                tableColumns.place_inspection,
+                tableColumns.condition_inspection,
+                tableColumns.grease_shoot_inspection,
+                tableColumns.weather_inspection,
+                tableColumns.temperature_inspection,
+                tableColumns.rain_inspection,
             ],
             // kolom visibility dropdown
             displayColumns: [
-                // {
-                //     value: "uuid",
-                //     label: "ID",
-                // },
-                // {
-                //     value: "uuid_tb_employee",
-                //     label: "ID Karywan",
-                // },
-                // {
-                //     value: "uuid_tb_inspection",
-                //     label: "ID Inspeksi",
-                // },
-                // {
-                //     value: "equipment_inspection",
-                //     label: "Alat",
-                // },
-                // {
-                //     value: "belong_employee.name_employee",
-                //     label: "Karyawan",
-                // },
-
-                {
-                    value: "belong_library_equipment.name_equipment",
-                    label: "Alat",
-                },
-                {
-                    value: "belong_library_location.name_location",
-                    label: "Lokasi",
-                },
-                // {
-                //     value: "location_inspection",
-                //     label: "Kode Lokasi",
-                // },
-                {
-                    value: "place_inspection",
-                    label: "Letak",
-                },
-                {
-                    value: "condition_inspection",
-                    label: "Kondisi",
-                },
-                {
-                    value: "grease_shoot_inspection",
-                    label: "Grease Shoot",
-                },
-                {
-                    value: "weather_inspection",
-                    label: "Cuaca",
-                },
-                {
-                    value: "temperature_inspection",
-                    label: "Temperatur",
-                },
-                {
-                    value: "rain_inspection",
-                    label: "Hujan",
-                },
-                {
-                    value: "current_upnormal_inspection",
-                    label: "Upnormal Sekarang",
-                },
-                {
-                    value: "last_upnormal_inspection",
-                    label: "Upnormal Sebelumnya",
-                },
-                {
-                    value: "screenshoot_inspection",
-                    label: "Screenshoot",
-                },
-                {
-                    value: "created_at",
-                    label: "Dibuat",
-                },
-                {
-                    value: "updated_at",
-                    label: "Diperbarui",
-                }
+                // tableColumns.uuid,
+                // tableColumns.uuid_tb_employee,
+                // tableColumns.uuid_tb_location,
+                // tableColumns.uuid_tb_equipment,
+                // tableColumns.uuid_tb_schedule,
+                tableColumns.name_equipment,
+                tableColumns.name_location,
+                tableColumns.place_inspection,
+                tableColumns.condition_inspection,
+                tableColumns.grease_shoot_inspection,
+                tableColumns.weather_inspection,
+                tableColumns.temperature_inspection,
+                tableColumns.rain_inspection,
+                tableColumns.created_at,
+                tableColumns.updated_at,
             ],
         },
         dynamic: { // mutable
-            /*
-             * reserve data-table
-             */
             separator: "horizontal",
             visibleColumns: [
+                "name_employee",
 
-                // 'uuid',
-                // 'uuid_tb_employee',
-                // 'uuid_tb_inspection',
-                // 'equipment_inspection',
-                // 'location_inspection',
-                // "belong_employee.name_employee",
-                "belong_library_equipment.name_equipment",
-                "belong_library_location.name_location",
+                'created_at',
+                'updated_at',
+
+                "name_equipment",
+                "name_location",
                 'place_inspection',
                 'condition_inspection',
                 'grease_shoot_inspection',
                 'weather_inspection',
                 'temperature_inspection',
                 'rain_inspection',
-                'current_upnormal_inspection',
-                'last_upnormal_inspection',
-                'screenshoot_inspection',
-                'created_at',
-                'updated_at',
             ],
             selected: [],
             loading: false,
@@ -356,20 +379,19 @@ const state = {
     data: {
         pagination: {
             sortBy: "created_at",
-            descending: false,
+            descending: true,
             page: 1,
             rowsPerPage: 25,
             rowsNumber: 1,
-            // below is additional object
-            // column: "created_at",
             segment: "/mutation/inspection",
-            search_column: "created_at", // search_column:"" is sortBy: "",
+            search_column: "created_at",
             search_operator: "*",
             search_query_1: "",
             search_query_2: "",
             month: function() {
+                return '01'
                 const month = new Date().getMonth()
-                return (month <= 9 ? '0'+month : month).toString()
+                return (month <= 9 ? '0' + month : month).toString()
             }(),
             year: new Date().getFullYear(),
         },
@@ -378,172 +400,145 @@ const state = {
             current_page: 0,
             data: []
         },
-        /*
-         * method data-table
-         * master -> detail
-         */
-        detail: {}
     }
 };
 
 const getters = {
-    /*
-     * reserve data-table
-     * config
-     */
-    [inspeksi_temperatur.config.static.columns]: (state) => {
+    [columns]: (state) => {
         return state.config.static.columns
     },
-    [inspeksi_temperatur.config.static.selectedColumns]: (state) => {
+    [selectedColumns]: (state) => {
         return state.config.static.selectedColumns
     },
-    [inspeksi_temperatur.config.static.displayColumns]: (state) => {
+    [displayColumns]: (state) => {
         return state.config.static.displayColumns
     },
-    [inspeksi_temperatur.config.dynamic.separator]: (state) => {
+    [separator]: (state) => {
         return state.config.dynamic.separator
     },
-    [inspeksi_temperatur.config.dynamic.visibleColumns]: (state) => {
+    [visibleColumns]: (state) => {
         return state.config.dynamic.visibleColumns
     },
-    [inspeksi_temperatur.config.dynamic.selected]: (state) => {
+    [selected]: (state) => {
         return state.config.dynamic.selected
     },
-    [inspeksi_temperatur.config.dynamic.loading]: (state) => {
+    [loading]: (state) => {
         return state.config.dynamic.loading
     },
-    /*
-     * reserve data-table
-     * data
-     */
-    [inspeksi_temperatur.data.pagination]: (state) => {
+
+    [pagination]: (state) => {
         return state.data.pagination
     },
-    [inspeksi_temperatur.data.payload.data]: (state) => {
-        return state.data.payload.data
+    [data]: (state) => {
+        try {
+            let dataArray = [
+                ...state.data.payload.data
+            ];
+
+            for (let i = 0; i < dataArray.length; i++) {
+                dataArray[i]['__index'] = i
+            }
+
+            return dataArray
+
+        } catch (error) {
+            return state.data.payload.data == null ? [] : state.data.payload.data
+        }
     },
-    [inspeksi_temperatur.data.payload.last_page]: (state) => {
+    [last_page]: (state) => {
         return state.data.payload.last_page
     },
-    [inspeksi_temperatur.data.payload.current_page]: (state) => {
+    [current_page]: (state) => {
         return state.data.payload.current_page
     },
-    /*
-     * method data-table
-     * data
-     * master -> detail
-     */
-    [inspeksi_temperatur.data.detail.select]: (state) => {
-        return state.data.detail
-    },
-
 };
 
 const mutations = {
-    /*
-     * reserve data-table
-     * config
-     */
-    [inspeksi_temperatur.config.dynamic.separator]: (state, data) => {
+    [separator]: (state, data) => {
         state.config.dynamic.separator = data
     },
-    [inspeksi_temperatur.config.dynamic.visibleColumns]: (state, data) => {
+    [visibleColumns]: (state, data) => {
         state.config.dynamic.visibleColumns = data
     },
-    [inspeksi_temperatur.config.dynamic.selected]: (state, data) => {
+    [selected]: (state, data) => {
         state.config.dynamic.selected = data
     },
-    [inspeksi_temperatur.config.dynamic.loading]: (state, data) => {
+    [loading]: (state, data) => {
         state.config.dynamic.loading = data
     },
-    /*
-     * reserve data-table
-     * data
-     */
-    [inspeksi_temperatur.data.pagination]: (state, data) => {
+
+    [pagination]: (state, data) => {
         state.data.pagination = data
-        console.log('inspeksi_temperatur.data.pagination', state.data.pagination);
+            // console.log('inspeksi_temperatur.data.pagination', state.data.pagination);
     },
-    [inspeksi_temperatur.data.payload.data]: (state, data) => {
+    [data]: (state, data) => {
         state.data.payload = data
-        // console.log('mutation data', state.data.payload);
+            // console.log('mutation data', state.data.payload);
 
     },
-    /*
-     * method data-table
-     * master -> detail
-     */
-    [inspeksi_temperatur.data.detail.select]: (state, id) => {
+    [replace]: (state, params) => {
+        // me-replace data di payload.data[] setelah berhasil update oleh axios
+
         const data = state.data.payload.data
         if (data.length > 0) {
+            // console.log('mutation modules/inspeksi/temperatur.js ', params);
             for (let i = 0; i < data.length; i++) {
                 const element = data[i];
-                if (id == element.uuid) {
-                    state.data.detail = element;
+                // console.log(element.uuid);
+                if (params.uuid == element.uuid) {
+                    data[i].updated_at = params.updated_at;
+                    data[i].valid_inspection = params.valid_inspection;
                 }
             }
         }
     },
-    [inspeksi_temperatur.data.detail.splice]: (state, id) => {
+    [remove]: (state, params) => {
         const data = state.data.payload.data
         if (data.length > 0) {
             for (let i = 0; i < data.length; i++) {
                 const element = data[i];
-                if (id == element.uuid) {
-                    data.splice(i, 1)
+                if (params.uuid == element.uuid) {
+                    element.splice(i, 1)
                 }
             }
         }
-    },
-    [inspeksi_temperatur.data.detail.update]: (state, data) => {
-        state.data.detail = data
-    },
-    [inspeksi_temperatur.data.detail.delete]: (state) => {
-        state.data.detail = {};
     },
 };
 
 const actions = {
-    [inspeksi_temperatur.action]: ({
-        commit
+    [action]: ({
+        commit,
+        state
     }, payload) => {
 
         switch (payload.type) {
             case 'separator':
-                commit(inspeksi_temperatur.config.dynamic.separator, payload.data);
+                commit(separator, payload.data);
                 break;
             case 'visibleColumns':
-                commit(inspeksi_temperatur.config.dynamic.visibleColumns, payload.data);
+                commit(visibleColumns, payload.data);
                 break;
             case 'selected':
-                commit(inspeksi_temperatur.config.dynamic.selected, payload.data);
+                commit(selected, payload.data);
                 break;
             case 'loading':
-                commit(inspeksi_temperatur.config.dynamic.loading, payload.data);
+                commit(loading, payload.data);
                 break;
 
             case 'pagination':
-                commit(inspeksi_temperatur.data.pagination, payload.data);
+                commit(pagination, payload.data);
                 break;
             case 'payload':
-                commit(inspeksi_temperatur.data.payload.data, payload.data);
+                commit(data, payload.data);
                 break;
-
-            case 'select':
-                commit(inspeksi_temperatur.data.detail.select, payload.id);
+            case "replace":
+                commit(replace, payload.data);
                 break;
-            case 'splice':
-                commit(inspeksi_temperatur.data.detail.splice, payload.id);
-                break;
-            case 'update':
-                commit(inspeksi_temperatur.data.detail.update, payload.id);
-                break;
-            case 'delete':
-                commit(inspeksi_temperatur.data.detail.delete);
+            case "add":
+                state.data.payload.data.push(payload.data)
                 break;
         }
     },
-
 };
 
 // export this module.
